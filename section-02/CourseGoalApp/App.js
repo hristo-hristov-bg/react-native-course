@@ -1,28 +1,56 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import GoalItem from "./src/components/GoalItem";
+import GoalInput from "./src/components/GoalInput";
 
 export default function App() {
+  const [courseGoals, setCourseGoals] = useState([]);
+
+  const addHandler = (inputText) => {
+    setCourseGoals((prev) => [
+      ...prev,
+      { text: inputText, id: Math.random().toString() },
+    ]);
+  };
+
+  const deleteHandler = (id) => {
+    setCourseGoals((prev) => {
+      return prev.filter((goal) => goal.id !== id);
+    });
+  };
+
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.dummyText}>Another piece of text!</Text>
+    <View style={styles.appContainer}>
+      <GoalInput onAddGoal={addHandler} />
+      <View style={styles.goalsContainer}>
+        <FlatList
+          data={courseGoals}
+          renderItem={(itemData) => {
+            return (
+              <GoalItem
+                text={itemData.item.text}
+                onDelete={deleteHandler}
+                id={itemData.item.id}
+              />
+            );
+          }}
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
+          alwaysBounceVertical={false}
+        />
       </View>
-      <Text style={styles.dummyText}>Hello World!</Text>
-      <Button title="Tap me!" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 50,
+    paddingHorizontal: 16,
   },
-  dummyText: {
-    margin: 16,
-    padding: 16,
-    borderWidth: 2,
-    borderColor: "blue",
+  goalsContainer: {
+    flex: 5,
   },
 });
