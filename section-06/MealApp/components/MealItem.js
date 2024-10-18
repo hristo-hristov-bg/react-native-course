@@ -7,6 +7,7 @@ import {
   View,
   Platform,
 } from "react-native";
+
 import MealDetails from "./MealDetails";
 
 function MealItem({
