@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 
 function RecentExpenses() {
-  return <Text>Recent Expense Screen!!!</Text>;
+  return <Text>Recent Expenses Screen!!!</Text>;
 }
 
 export default RecentExpenses;
